@@ -9,6 +9,7 @@ export default function Todo(props) {
           {props.name}
         </label>
       </div>
+      
       <div className="btn-group">
         <button type="button" className="btn">
           Edit <span className="visually-hidden">{props.name}</span>
