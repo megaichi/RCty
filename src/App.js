@@ -5,28 +5,58 @@ import Form from "./components/Form";
 import FileButton　from "./components/FilterButton";
 import Todo from "./components/Todo";
 
+const [isEditing, setEditing] = useState(false);
 
 function App(props){
-  //追記 const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
-  //追記 const headingText = `${taskList.length} ${tasksNoun} remaining`;
   const [tasks, setTasks] = useState(props.tasks);
+　function toggleTaskCompleted(id) {
+    const updatedTasks = tasks.map(task => {
+      
+      if (id === task.id) {
+        return {...task, completed: !task.completed}
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
 
+  //　タスクを消します
+  function deleteTask(id) {
+    const remaininngTasks = tasks.filter(task => id !== task.id);
+    setTasks(remaininngTasks);
+  }
+
+  function editTask(id, newName) {
+    const editedTaskList = tasks.map(task => {
+      if (id === task.id) {
+
+        return {...task, name: newName}
+      }
+      return
+    });
+    setTasks(editedTaskList)
+  }
+
+  const taskList = tasks.map(task => (
+    <Todo
+      id={task.id}
+      name={task.name}
+      completed={task.completed}
+      key={task.id}
+      toggleTaskCompleted={toggleTaskCompleted}
+      deleteTask={deleteTask}
+      editTask={editTask}
+    />
+  ));
+
+  const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
+  const headingText = `${taskList.length} ${tasksNoun} remaining`;
+  
   function addTask(name) {
     const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
     setTasks([...tasks, newTask]);
   }
-
-  
-  const taskList = tasks.map(task => (
-    <Todo
-        id={task.id}
-        name={task.name}
-        completed={task.completed}
-        key={task.id}
-        //追記 toggleTaskCompleated={toggleTaskCompleated}
-      />
-    )
-  );
+ 
   return (
     <div className="todoapp stack-large">
       <Form addTask={addTask} />
@@ -35,14 +65,12 @@ function App(props){
         <FileButton />
         <FileButton />
       </div>
-      <h2 id="list-heading">3 tasks remaning</h2>
-       {/* 上記消して下記追加 */}
-      {/* <h2 id="list-heading">{headingText}</h2>  */}
+      <h2 id="list>-heading">{headingText}</h2>
       <ul
         role="list"
         className="todo-list stack-large stack-exception"
         aria-labelledby="list-heading"
-       >
+      >
         {taskList}
       </ul>
     </div>
