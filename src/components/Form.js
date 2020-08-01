@@ -13,7 +13,7 @@ function Form(props) {
     setName("");
   }
   return (
-    <form className="stack-small" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <h2 className="label-wrapper">
         <label htmlFor="new-todo-input" className="label__lg">
           What needs to be done?
