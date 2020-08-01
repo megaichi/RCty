@@ -1,15 +1,29 @@
 import React, { useState }from "react";
 
 
-export default function Todo(props) {
 
+export default function Todo(props) {
+  const [newName, setNewName] = useState('');
+  
+  const [isEditing, setEditing] = useState(false);
+
+  function handleChange(e) {
+    setNewName(e.target.value);
+  }
+  
   const editingTemplate = (
     <form className="stack-small">
       <div className="form-group">
        <label className="todo-label" htmlFor={props.id}>
          New name for {props.name}
        </label>
-       <input id={props.id} className="todo-text" type="text" />
+       <input 
+       id={props.id} 
+       className="todo-text" 
+       type="text" 
+       value={newName}
+       onChange={handleChange}
+       />
       </div>
       <div className="btn-group">
         <button type="button" className="btn todo-cancel">
@@ -54,37 +68,6 @@ export default function Todo(props) {
       </div>
     </div>
   );
-
   return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>;
 
-  
-
-//   (
-//     <li className="todo stack-small">
-//       <div className="c-cb">
-//         <input id="todo-0" type="checkbox" defaultChecked={props.completed} />
-//         <label className="todo-label" htmlFor="{props.id}">
-//           {props.name}
-//         </label>
-//       </div>
-//       <input 
-// 　　　　　　id={props.id}
-// 　　　　　　type="checkbox"
-// 　　　　　　defaultChecked={props.completed}
-// 　　　　　　onChange={() => props.toggleTaskCompleted(props.id)}
-// 　　　　　/>
-//       <div className="btn-group">
-//         <button type="button" className="btn">
-//           Edit <span className="visually-hidden">{props.name}</span>
-//         </button>
-//         <button 
-//           type="button" 
-//           className="btn btn__danger"
-//           onClick={() => props.deleteTask(props.id)}
-//         >
-//           Delete <span className="visually-hidden">{props.name}</span>
-//         </button>
-//       </div>
-//     </li>
-//   );
 }
