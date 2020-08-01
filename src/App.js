@@ -40,10 +40,9 @@ function App(props){
   function editTask(id, newName) {
     const editedTaskList = tasks.map(task => {
       if (id === task.id) {
-
         return {...task, name: newName}
       }
-      return
+      return task;
     });
     setTasks(editedTaskList)
   }
